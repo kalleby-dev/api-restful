@@ -1,0 +1,31 @@
+{
+  "name": "api-restful",
+  "version": "0.0.1",
+  "description": "Api restful com nodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "nodemon ./src/index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kalleby-dev/api-restful.git"
+  },
+  "keywords": [
+    "api",
+    "node",
+    "restful"
+  ],
+  "author": "Kalleby Santos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kalleby-dev/api-restful/issues"
+  },
+  "homepage": "https://github.com/kalleby-dev/api-restful#readme",
+  "dependencies": {
+    "@hapi/hapi": "^20.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.5"
+  }
+}
