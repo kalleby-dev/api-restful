@@ -10,7 +10,7 @@ module.exports = [
     {
         method: 'GET',
         path: '/api/v1/alunos/{id}',
-        handler: alunosHandler.get
+        handler: alunosHandler.find
 
     },
     {

@@ -1,4 +1,4 @@
-const AlunoModel = require('../models/alunos');
+const AlunoRepository = require('../repositories/alunos');
 
 const enconder = aluno => ({
     type: 'alunos',
@@ -13,53 +13,38 @@ const enconder = aluno => ({
 });
 
 
-const getAll = async (req, res) => {
-    const alunos = await AlunoModel.find({});
-    let msg = {data: alunos.map(enconder)};
-    return res.response(msg).code(200);
+const getAll = async () => {
+    const alunos = await AlunoRepository.getAll();
+    return { data: alunos.map(enconder) };
 };
 
-const get = async (req, res) => {
-    const aluno = await AlunoModel.findById(req.params.id);
-    let msg = {data: enconder(aluno)};
-    return res.response(msg).code(200);
+
+const find = async (req) => {
+    const aluno = await AlunoRepository.find(req.params.id);
+    return { data: enconder(aluno) };
 };
 
 
 const save = async (req, res) => {
-    const {name, number} = req.payload; 
-    
-    const aluno = new AlunoModel; 
-    aluno.name = name;
-    aluno.number = number;
-    await aluno.save();
-
-    let msg = {data: enconder(aluno)};
-    return res.response(msg).code(201);
+    const aluno = await AlunoRepository.save(req.payload);
+    return res.response({ data: enconder(aluno) }).code(201);
 };
 
 
-const update = async (req, res) => {
-    const {name, number} = req.payload;
-    let data = {
-        name: name,
-        number: number 
-    }
-
-    const aluno = await AlunoModel.findByIdAndUpdate(req.params.id, data);
-    let msg = {data: enconder(aluno)};
-    return res.response(msg).code(200);
-}
+const update = async (req) => {
+    const aluno = await AlunoRepository.update(req.params.id, req.payload);
+    return { data: enconder(aluno) }
+};
 
 
 const remove = async (req, res) => {
-    await AlunoModel.findOneAndDelete({ _id: req.params.id });
+    await AlunoRepository.remove(req.params.id);
     return res.response().code(204);
 };
 
 module.exports = {
     getAll,
-    get,
+    find,
     save,
     update,
     remove
