@@ -28,7 +28,10 @@ module.exports = [
     {
         method: 'DELETE',
         path: '/api/v1/alunos/{id}',
-        handler: alunosHandler.remove
+        handler: alunosHandler.remove,
+        options: {
+            cors: true
+        }
 
     }
 ]
