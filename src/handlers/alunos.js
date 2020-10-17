@@ -1,4 +1,3 @@
-const alunos = require('../models/alunos');
 const AlunoModel = require('../models/alunos');
 
 const enconder = aluno => ({
@@ -13,9 +12,17 @@ const enconder = aluno => ({
     }
 });
 
+
 const getAll = async (req, res) => {
     const alunos = await AlunoModel.find({});
-    return {data: alunos.map(enconder)};
+    let msg = {data: alunos.map(enconder)};
+    return res.response(msg).code(200);
+};
+
+const get = async (req, res) => {
+    const aluno = await AlunoModel.findById(req.params.id);
+    let msg = {data: enconder(aluno)};
+    return res.response(msg).code(200);
 };
 
 
@@ -27,8 +34,22 @@ const save = async (req, res) => {
     aluno.number = number;
     await aluno.save();
 
-    return res.response(strResponse).code(201);
+    let msg = {data: enconder(aluno)};
+    return res.response(msg).code(201);
 };
+
+
+const update = async (req, res) => {
+    const {name, number} = req.payload;
+    let data = {
+        name: name,
+        number: number 
+    }
+
+    const aluno = await AlunoModel.findByIdAndUpdate(req.params.id, data);
+    let msg = {data: enconder(aluno)};
+    return res.response(msg).code(200);
+}
 
 
 const remove = async (req, res) => {
@@ -38,6 +59,8 @@ const remove = async (req, res) => {
 
 module.exports = {
     getAll,
+    get,
     save,
+    update,
     remove
 }
