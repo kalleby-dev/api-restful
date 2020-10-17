@@ -12,6 +12,12 @@ module.exports = [
         path: '/api/v1/alunos',
         handler: alunosHandler.save
 
+    },
+    {
+        method: 'DELETE',
+        path: '/api/v1/alunos/{id}',
+        handler: alunosHandler.remove
+
     }
 ]
 
